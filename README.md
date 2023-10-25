@@ -34,7 +34,11 @@ The Job Portal Web Application is a dynamic online platform built using ASP.NET 
 ## Screenshots
 
 ![Screenshot](JobPortal/Screenshots/home.jpg)
-
+![Screenshot](JobPortal/Screenshots/jobs.jpg)
+![Screenshot](JobPortal/Screenshots/jobdetails.jpg)
+![Screenshot](JobPortal/Screenshots/admin.jpg)
+![Screenshot](JobPortal/Screenshots/employer.jpg)
+![Screenshot](JobPortal/Screenshots/chats.jpg)
 The Job Portal Web Application aims to bridge the gap between job seekers and employers, making the job search and hiring process more efficient, effective, and user-friendly.
 
 

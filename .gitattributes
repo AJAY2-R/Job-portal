@@ -1,5 +1,5 @@
 *.css linguist-detectable=false
-*.js linguist-detectable=true
+*.js linguist-detectable=false
 *.html linguist-detectable=false
 *.chtml linguist-detectable=false
 *.mako linguist-detectable=false

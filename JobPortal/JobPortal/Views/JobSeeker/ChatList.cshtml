@@ -1,0 +1,31 @@
+﻿@model IEnumerable<JobPortal.Models.ChatList>
+@{
+    ViewBag.Title = "ChatList";
+    Layout = "~/Views/Shared/JobSeekerLayout.cshtml";
+}
+<div class="container mt-3">
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <h2 class="text-center">Chat List</h2>
+            <ul class="list-group">
+                @foreach (var chat in Model)
+                {
+                    <li class="list-group-item">
+                        <div class="row">
+                            <div class="avatar col-md-1 ">
+                               <div class="mt-2">@chat.CompanyName[0]</div>
+                            </div>
+                            <div class="col-md-6 mt-2">
+                                <strong> @chat.CompanyName</strong>
+                            </div>
+                            <div class="col-md-5 text-right mt-2">
+                                <a href="@Url.Action("SendMessage", "JobSeeker", new { id = chat.EmployerID })" class="chat-link">Open Chat</a>
+                            </div>
+                        </div>
+                    </li>
+                }
+            </ul>
+        </div>
+    </div>
+</div>
+

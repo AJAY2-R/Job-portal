@@ -1,0 +1,66 @@
+﻿@model JobPortal.Models.VacancyViewModel
+@{
+    ViewBag.Title = "Update Job vacancy";
+    Layout = "~/Views/Shared/EmployerLayout.cshtml";
+}
+
+<div class="d-flex justify-content-center m-5">
+    <div class="row bg-cus">
+        <div class="col-md-7">
+            <h4>Update job vacancy</h4>
+            <form action="@Url.Action("UpdateVacancy","Employer")" method="post" onsubmit="return validateJobForm();">
+                <input type="hidden" name="VacancyID" value="@Model.JobVacancies.JobID" />
+                <label for="JobTitle">Job title:</label>
+                <input type="text" id="JobTitle" name="JobTitle" placeholder="Job titile" value="@Model.JobVacancies.JobTitle" onblur="validateJobTitle()" class="form-control">
+                <span id="error-JobTitle" class="text-danger"></span><br>
+
+                <label for="Description">Description:</label><br>
+                <textarea id="Description" name="Description" placeholder="Description" onblur="validateDescription()" class="form-control">
+                    @Model.JobVacancies.Description
+                </textarea>
+                <span id="error-Description" class="text-danger"></span><br>
+
+                <label for="CategoryID">Category:</label>
+                <select id="CategoryID" name="CategoryID" onblur="validateCategory()" class="form-control">
+                    <option value="">Please select a category</option>
+                    @foreach (var cat in Model.Categories)
+                    {
+                        <option value="@cat.CategoryId" @if (Model.JobVacancies.CategoryID == cat.CategoryId) { <text> selected</text>}> @cat.CategoryName</option>
+                    }
+                </select>
+                <span id="error-CategoryID" class="text-danger"></span><br>
+
+                <label for="Location">Location:</label>
+                <input type="text" id="Location" name="Location" value="@Model.JobVacancies.Location" placeholder="Location" onblur="validateLocation()" class="form-control">
+                <span id="error-Location" class="text-danger"></span><br>
+
+                <label for="Salary">Salary:</label>
+                <input type="number" id="Salary" name="Salary" placeholder="Salary" value="@Model.JobVacancies.Salary" onblur="validateSalary()" class="form-control">
+                <span id="error-Salary" class="text-danger"></span><br>
+
+                <label for="EmploymentType">Employment Type:</label>
+                <input type="text" id="EmploymentType" name="EmploymentType" placeholder="Employement type" value="@Model.JobVacancies.EmploymentType" onblur="validateEmploymentType()" class="form-control">
+                <span id="error-EmploymentType" class="text-danger"></span><br>
+
+                <label for="ApplicationDeadline">Application Deadline:</label>
+                <input type="date" id="ApplicationDeadline" name="ApplicationDeadline" placeholder="Deadline" value="@Model.JobVacancies.ApplicationDeadline.ToString("yyyy-MM-dd")" onblur="validateApplicationDeadline()" class="form-control">
+                <span id="error-ApplicationDeadline" class="text-danger"></span><br>
+
+                <select id="publicationStatus" name="IsPublished" class="form-control">
+                    <option value="true" @(Model.JobVacancies.IsPublished ? "selected" : "")>Publish</option>
+                    <option value="false" @(Model.JobVacancies.IsPublished ? "" : "selected")>Unpublish</option>
+                </select>
+                <input type="submit" value="Update" class="btn-reg mt-2" >
+            </form>
+        </div>
+        <div class="col-md-5"><img src="~/Content/Static/Job_Posting_Page.51e6ab7c156a002d438b.png" class="post-vac" /></div>
+
+    </div>
+</div>
+<script src="~/Scripts/MyScripts/main.js"></script>
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        disablePastDates(document.getElementById("ApplicationDeadline"));
+    });
+</script>
+

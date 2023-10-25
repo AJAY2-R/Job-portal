@@ -1,0 +1,80 @@
+﻿@model IEnumerable<JobPortal.Models.JobDetails>
+
+@{
+    ViewBag.Title = "Jobs";
+    Layout = "~/Views/Shared/AdminLayout.cshtml";
+    var categories = Model.Select(job => new { CategoryName = job.CategoryName, CategoryId = job.CategoryID }).Distinct().ToList();
+}
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<div class="container-fluid mt-5">
+    <div class="row ">
+        <div class="col-md-3">
+            <div class="card p-2">
+                <h3 class="text-left"></h3>
+                <h4>Apply filters</h4>
+                <div class="input-group">
+                    <input type="text" id="searchString" placeholder="Search..." class="form-control" />
+                    <span class="input-group-btn ml-1">
+                        <a href="#" id="searchButton" class="btn btn-primary">Search</a>
+                    </span>
+                </div>
+
+                <p>Categories :</p>
+                @foreach (var cat in categories)
+                {
+                    <a href="@Url.Action("Jobs", "Admin", new { search = cat.CategoryName })" class="filter-category">@cat.CategoryName</a>
+                }
+
+            </div>
+        </div>
+        <div class="col-md-9 ">
+            @if (Model.Count() == 0)
+            {
+                <p>No jobs found</p>
+            }
+            else
+            {
+                foreach (var item in Model)
+                {
+                    if (item.IsPublished && item.ApplicationDeadline >= DateTime.Now )
+                    {
+                    <div class="row mt-2">
+                        <div class="card p-2">
+                            <div class="col-md-10">
+                                <div class="row">
+                                    <div class="col-md-2">
+                                        <img alt="CompanyLogo" src="data:jpg/png;base64,@Convert.ToBase64String(item.CompanyLogo)" class="rounded" width=60px height=60px />
+                                    </div>
+                                    <div class="col-md-10">
+                                        <h3>@item.JobTitle</h3>
+                                        <div class="col-md-1"></div>
+                                        <div class="col-md-10 ">
+                                            <p class="reduce-line-spacing text-muted"><i class="fa fa-building-o"></i> @item.CompanyName</p>
+                                            <p class="reduce-line-spacing text-muted"><i class="fa fa-briefcase"></i> @item.CategoryName ,  <i class="fa fa-map-marker"></i> @item.Location</p>
+                                            <p class="reduce-line-spacing text-muted"><i class="fa fa-money"></i> @item.Salary</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div style="text-align: right;">
+                                @Html.ActionLink("Details", "JobDetails", new { id = item.JobID }, new { @class = "btn btn-outline-primary" })
+                            </div>
+                        </div>
+                    </div>
+                    }
+                }
+            }
+            </div>
+    </div>
+</div>
+<script src="~/Scripts/jquery-3.7.1.min.js"></script>
+<script>
+    $(document).ready(function () {
+        $("#searchButton").click(function () {
+            var searchString = $("#searchString").val();
+            var url = "@Url.Action("Jobs", "Admin")?search=" + encodeURIComponent(searchString);
+            window.location.href = url;
+        });
+    });
+</script>

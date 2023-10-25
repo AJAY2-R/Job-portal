@@ -1,0 +1,41 @@
+﻿@model IEnumerable<JobPortal.Models.Skills>
+
+@{
+    ViewBag.Title = "Skills";
+    Layout = "~/Views/Shared/AdminLayout.cshtml";
+}
+
+
+
+<div class="d-flex justify-content-center mt-4">
+    <div class="col-md-6">
+        <h2>Skills</h2>
+        <p>
+            @Html.ActionLink("Create New", "AddSkills", null, new { @class = "btn btn-primary" })
+        </p>
+        <table class="table table-bordered">
+            <thead>
+                <tr>
+                    <th>
+                        Skill
+                    </th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.SkillName)
+                        </td>
+                        <td>
+                            @Html.ActionLink("Edit", "EditSkill", new { id = item.SkillId }, new { @class = "btn btn-primary edit-link" }) |
+                            @Html.ActionLink("Delete", "DeleteSkill", new { id = item.SkillId }, new { @class = "btn btn-danger" })
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>

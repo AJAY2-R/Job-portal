@@ -1,0 +1,119 @@
+﻿@model JobPortal.Models.EmployerModel
+
+@{
+    ViewBag.Title = "EmployerRegsiter";
+    Layout = "~/Views/Shared/MainLayout.cshtml";
+}
+
+<div class="container-fluid mt-5">
+    <div class="row ">
+        <div class="col-md-4 mt-5">
+            <div class="cus-box-reg">
+                <center> <img src="~/Content/Static/white-boy.a0d2814a.png" /></center>
+                <ul class="mt-1">
+                    <li>
+                        On registering, you can
+                        Build your profile and let recruiters find you
+                    </li>
+                    <li> Get job postings delivered right to your email</li>
+
+                    <li>  Find a job and grow your career</li>
+                </ul>
+                <hr />
+                <center><a href="@Url.Action("JobSeekerRegister","Home")">Register as a job seeker</a></center>
+            </div>
+        </div>
+        <div class="col-md-8">
+            <div class="card p-4" style="border: none;transform: translateY(0);">
+                <h3>Employer registration </h3>
+
+                <form action="@Url.Action("EmployerRegister","Home")" method="post" enctype="multipart/form-data" onsubmit="return validateEmployerRegisterForm()">
+                    @Html.AntiForgeryToken()
+
+                    <div class="form-horizontal">
+                        <hr />
+                        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                        <div class="form-group">
+                            <label for="CompanyName">Company name</label>
+                            <div>
+                                <input type="text" name="CompanyName" id="companyname" class="form-control" onblur="validateCompanyName(this)" placeholder="Company name" />
+                                <span id="error-companyname" class="text-danger"></span>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="OfficialEmail">Official email</label>
+                            <div>
+                                <input type="text" name="OfficialEmail" id="officialemail" class="form-control" placeholder="Official email" onblur="validateOfficialEmail(this)" />
+                                <span id="error-officialemail" class="text-danger"></span>
+                            </div>
+                        </div>
+
+
+                        <div class="form-group">
+                            <label for="Website" class="control-label">Website</label>
+                            <input type="text" name="Website" id="Website" class="form-control" placeholder="Website" onblur="validateWebsite(this)" />
+                            <span id="error-Website" class="text-danger"></span>
+                        </div>
+                        <hr />
+                        <h5>Employer details</h5>
+                        <div class="form-group">
+                            <label for="Name" class="control-label">Full name</label>
+                            <input type="text" name="Name" id="Name" class="form-control" placeholder="Full name" onblur="validateName(this)" />
+                            <span id="error-Name" class="text-danger"></span>
+                        </div>
+                        <div class="form-group">
+                            <label for="Designation" class="control-label">Designation</label>
+                            <input type="text" name="Designation" id="Designation" class="form-control" placeholder="Designation" onblur="validateDesignation(this)" />
+                            <span id="error-Designation" class="text-danger"></span>
+                        </div>
+                        <div class="form-group">
+                            <label for="Email" class="control-label">Email</label>
+                            <input type="email" name="Email" id="Email" class="form-control" placeholder="Email" onblur="validateEmail(this)" />
+                            <span id="error-email" class="text-danger"></span>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="ContactPhone" class="control-label">Contact number</label>
+                            <input type="text" name="ContactPhone" id="ContactPhone" class="form-control" placeholder="Phone number" onblur="validatePhone(this)" />
+                            <span id="error-phone" class="text-danger"></span>
+                        </div>
+                        <div class="form-group mt-2">
+                            <label for="username">Username</label>
+                            <input type="text" name="Username" id="username" placeholder="Username" class="form-control" oninput="validateUsername(this.value)">
+                            <span id="error-username" class="error-msg"></span>
+                        </div>
+                        <div class="form-group mt-2">
+                            <label for="Password">Password</label>
+                            <input type="password" name="Password" id="Password" class="form-control" placeholder="Password" onkeyup="validateCpass(this)" onfocusout="validatePass(this)">
+                            <span id="error-password" class="error-msg"></span>
+                        </div>
+                        <div class="form-group mt-2">
+                            <label for="ConfirmPassword">Confirm password</label>
+                            <input type="password" name="cpassword" id="ConfirmPassword" placeholder="Confirm password" class="form-control" onfocusout="validateCpass(this)">
+                            <span id="error-cpassword" class="error-msg"></span>
+                        </div>
+                        <div class="form-group mt-2">
+                            <label for="logoUpload">Company logo</label>
+                            <input type="file" name="logoUpload" id="logoUpload" class="form-control" accept=".png, .jpg" onchange="validateLogoUpload(this)" />
+                            <span id="error-logoUpload" class="text-danger"></span>
+                        </div>
+
+                        <div class="form-group">
+                            <div class="mt-3">
+                                <input type="submit" value="Register" class="btn-reg" />
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="~/Scripts/MyScripts/main.js"></script>

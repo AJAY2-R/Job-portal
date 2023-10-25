@@ -1,0 +1,73 @@
+﻿@model JobPortal.Models.EmployerModel
+@{
+    ViewBag.Title = "View";
+    Layout = "~/Views/Shared/EmployerLayout.cshtml";
+}
+<div class="d-flex justify-content-center mt-5">
+    <div class="col-md-6">
+        <div class="card p-3" style="transform:translateY(0);">
+            <h3>Update profile</h3>
+            <form action="@Url.Action("UpdateProfile","Employer")" method="post"  enctype="multipart/form-data" onsubmit="return validateEmployerUpdateForm();">
+                <div class="form-group">
+                    <label for="CompanyName">Company name</label>
+                    <div>
+                        <input type="text" name="CompanyName" id="companyname" class="form-control" onblur="validateCompanyName(this)" placeholder="Company name" value="@Model.CompanyName" />
+                        <span id="error-companyname" class="text-danger"></span>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="OfficialEmail">Official email</label>
+                    <div>
+                        <input type="text" name="OfficialEmail" id="officialemail" class="form-control" placeholder="Official email" onblur="validateOfficialEmail(this)" value="@Model.OfficialEmail" />
+                        <span id="error-officialemail" class="text-danger"></span>
+                    </div>
+                </div>
+
+
+                <div class="form-group">
+                    <label for="Website" class="control-label">Website</label>
+                    <input type="text" name="Website" id="Website" class="form-control" placeholder="Website" onblur="validateWebsite(this)" value="@Model.Website" />
+                    <span id="error-Website" class="text-danger"></span>
+                </div>
+                <hr />
+                <h5>Employer details</h5>
+                <div class="form-group">
+                    <label for="Name" class="control-label">Full name</label>
+                    <input type="text" name="Name" id="Name" class="form-control" placeholder="Full name" onblur="validateName(this)" value="@Model.Name" />
+                    <span id="error-Name" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label for="Designation" class="control-label">Designation</label>
+                    <input type="text" name="Designation" id="Designation" class="form-control" placeholder="Designation" onblur="validateDesignation(this)" value="@Model.Designation" />
+                    <span id="error-Designation" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label for="Email" class="control-label">Email</label>
+                    <input type="email" name="Email" id="Email" class="form-control" placeholder="Email" onblur="validateEmail(this)" value="@Model.Email" />
+                    <span id="error-email" class="text-danger"></span>
+                </div>
+
+                <div class="form-group">
+                    <label for="ContactPhone" class="control-label">Contact number</label>
+                    <input type="text" name="ContactPhone" id="ContactPhone" class="form-control" placeholder="Phone number" onblur="validatePhone(this)" value="@Model.ContactPhone" />
+                    <span id="error-phone" class="text-danger"></span>
+                </div>
+                
+                <div class="form-group mt-2">
+                    <label for="logoUpload">Company logo</label>
+                    <input type="file" name="uploadedLogo" id="logoUpload" class="form-control" accept=".png, .jpg" onchange="validateLogoUpload(this)" />
+                    <span id="error-logoUpload" class="text-danger"></span>
+                </div>
+
+                <div class="form-group">
+                    <div class="mt-3">
+                        <input type="submit" value="Update" class="btn-reg" />
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="~/Scripts/MyScripts/main.js"></script>

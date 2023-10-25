@@ -1,0 +1,121 @@
+-----------Exception Details on  16-10-2023 06:37:47 PM-----------------
+-------------------------------------------------------------------------------------
+
+
+
+Log Written Date: 16-10-2023 06:37:47 PM
+
+Error Line No : line 76
+
+Error Message: SqlException
+
+Exception Type: System.Data.SqlClient.SqlException
+
+Error Location : A network-related or instance-specific error occurred while establishing a connection to SQL Server. The server was not found or was not accessible. Verify that the instance name is correct and that SQL Server is configured to allow remote connections. (provider: SQL Network Interfaces, error: 26 - Error Locating Server/Instance Specified)
+
+ Error Page Url: https://localhost:44377/Home/Login
+
+User Host IP: 
+
+
+--------------------------------*End*------------------------------------------
+
+
+
+-----------Exception Details on  16-10-2023 06:49:00 PM-----------------
+-------------------------------------------------------------------------------------
+
+
+
+Log Written Date: 16-10-2023 06:49:00 PM
+
+Error Line No : ine 264
+
+Error Message: SqlException
+
+Exception Type: System.Data.SqlClient.SqlException
+
+Error Location : The INSERT statement conflicted with the FOREIGN KEY constraint "FK__JobApplic__Seeke__6E01572D". The conflict occurred in database "JobPortal", table "dbo.JobSeekers", column 'SeekerID'.
+The statement has been terminated.
+
+ Error Page Url: https://localhost:44377/JobSeeker/ApplyJob/3
+
+User Host IP: 
+
+
+--------------------------------*End*------------------------------------------
+
+
+
+-----------Exception Details on  16-10-2023 07:51:44 PM-----------------
+-------------------------------------------------------------------------------------
+
+
+
+Log Written Date: 16-10-2023 07:51:44 PM
+
+Error Line No : ine 140
+
+Error Message: SqlException
+
+Exception Type: System.Data.SqlClient.SqlException
+
+Error Location : Could not find stored procedure 'SP_CreateContactMessage'.
+
+ Error Page Url: https://localhost:44377/Home/ContactUs
+
+User Host IP: 
+
+
+--------------------------------*End*------------------------------------------
+
+
+
+-----------Exception Details on  16-10-2023 07:53:25 PM-----------------
+-------------------------------------------------------------------------------------
+
+
+
+Log Written Date: 16-10-2023 07:53:25 PM
+
+Error Line No : ine 140
+
+Error Message: SqlException
+
+Exception Type: System.Data.SqlClient.SqlException
+
+Error Location : Could not find stored procedure 'SP_CreateContactMessage'.
+
+ Error Page Url: https://localhost:44377/Home/ContactUs
+
+User Host IP: 
+
+
+--------------------------------*End*------------------------------------------
+
+
+
+-----------Exception Details on  16-10-2023 07:54:03 PM-----------------
+-------------------------------------------------------------------------------------
+
+
+
+Log Written Date: 16-10-2023 07:54:03 PM
+
+Error Line No : ine 140
+
+Error Message: SqlException
+
+Exception Type: System.Data.SqlClient.SqlException
+
+Error Location : Procedure or function SP_CreateContactUsMessage has too many arguments specified.
+
+ Error Page Url: https://localhost:44377/Home/ContactUs
+
+User Host IP: 
+
+
+--------------------------------*End*------------------------------------------
+
+
+

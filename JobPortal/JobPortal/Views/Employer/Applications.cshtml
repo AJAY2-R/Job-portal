@@ -1,0 +1,92 @@
+﻿@model IEnumerable<JobPortal.Models.JobApplication>
+
+@{
+    ViewBag.Title = "Applications";
+    Layout = "~/Views/Shared/EmployerLayout.cshtml";
+}
+
+<h2>Applications</h2>
+<div class="d-flex align-items-center mb-3">
+    <div class="form-group  m-1 mb-0">
+        <input type="text" id="searchInput" class="form-control" placeholder="Search by name">
+    </div>
+    <div class="form-group  mb-0">
+        <select id="statusFilter" class="form-control">
+            <option value="">All Statuses</option>
+            <option value="Read">Read</option>
+            <option value="Approved">Approved</option>
+            <option value="Rejected">Rejected</option>
+            <option value="Pending">Pending</option>
+        </select>
+    </div>
+</div>
+
+    <table class="table table-striped table-bordered">
+        <thead class="thead-dark">
+            <tr>
+                <th scope="col">Application id</th>
+                <th scope="col">Applicant name</th>
+                <th scope="col">Date applied </th>
+                <th scope="col">Status</th>
+                <th scope="col">Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>@Html.DisplayFor(modelItem => item.JobApplicationID)</td>
+                    <td>@Html.DisplayFor(modelItem => item.SeekerName)</td>
+                    <td>@Html.DisplayFor(modelItem => item.ApplicationDate)</td>
+                    <td>@Html.DisplayFor(modelItem => item.Status)</td>
+                    <td>
+                        <div class="job-item" data-job-id="@item.JobApplicationID">
+                            @Html.ActionLink("View Profile", "JobSeekerProfile", "Employer", new { id = item.SeekerId }, new { @class = "btn btn-primary btn-sm job-link" }) |
+                            @Html.ActionLink("Approve", "ApplicationApprove", "Employer", new { id = item.JobApplicationID, aid = item.JobId }, new { @class = "btn btn-success btn-sm" }) |
+                            @Html.ActionLink("Reject", "ApplicationReject", "Employer", new { id = item.JobApplicationID, aid = item.JobId }, new { @class = "btn btn-danger btn-sm" })
+                        </div>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+
+    <script src="~/Scripts/jquery-3.7.1.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            $(".job-link").click(function (e) {
+                e.preventDefault();
+                var jobId = $(this).closest(".job-item").data("job-id");
+                var url = "/Employer/ApplicationRead/" + jobId;
+                $.ajax({
+                    url: url,
+                    type: 'GET',
+                    success: function (data) {
+                        console.log('Read');
+                    }
+                });
+                window.location.href = e.target.href;
+            });
+
+            function filterTable() {
+                var searchValue = $('#searchInput').val().toLowerCase();
+                var statusFilter = $('#statusFilter').val();
+
+                $('table tbody tr').each(function () {
+                    var seekerName = $(this).find('td:eq(1)').text().toLowerCase();
+                    var status = $(this).find('td:eq(3)').text().toLowerCase();
+
+                    var seekerMatch = seekerName.includes(searchValue);
+                    var statusMatch = statusFilter === '' || status === statusFilter.toLowerCase();
+
+                    if (seekerMatch && statusMatch) {
+                        $(this).show();
+                    } else {
+                        $(this).hide();
+                    }
+                });
+            }
+            $('#searchInput, #statusFilter').on('input change', filterTable);
+            filterTable();
+        });
+    </script>

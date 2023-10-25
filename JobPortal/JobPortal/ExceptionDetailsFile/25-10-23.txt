@@ -1,0 +1,48 @@
+-----------Exception Details on  25-10-2023 02:11:03 PM-----------------
+-------------------------------------------------------------------------------------
+
+
+
+Log Written Date: 25-10-2023 02:11:03 PM
+
+Error Line No : line 47
+
+Error Message: NullReferenceException
+
+Exception Type: System.NullReferenceException
+
+Error Location : Object reference not set to an instance of an object.
+
+ Error Page Url: https://localhost:44377/JobSeeker/JobSeekerProfile
+
+User Host IP: 
+
+
+--------------------------------*End*------------------------------------------
+
+
+
+-----------Exception Details on  25-10-2023 02:22:29 PM-----------------
+-------------------------------------------------------------------------------------
+
+
+
+Log Written Date: 25-10-2023 02:22:29 PM
+
+Error Line No : ine 481
+
+Error Message: NullReferenceException
+
+Exception Type: System.NullReferenceException
+
+Error Location : Object reference not set to an instance of an object.
+
+ Error Page Url: https://localhost:44377/JobSeeker/SendMessage/15
+
+User Host IP: 
+
+
+--------------------------------*End*------------------------------------------
+
+
+

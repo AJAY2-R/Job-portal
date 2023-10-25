@@ -1,0 +1,81 @@
+﻿
+@{
+    ViewBag.Title = "AddEductionDetails";
+    Layout = "~/Views/Shared/JobSeekerLayout.cshtml";
+}
+<link href="~/Content/select2.min.css" rel="stylesheet" />
+
+
+<div class="d-flex justify-content-center mt-5 ">
+    <div class="col-md-6">
+        <form action="@Url.Action("AddEducationDetails", "JobSeeker")"  method="post" onsubmit="return ValidateEducationForm()" >
+            <div class="card p-3" style="border: none;transform: translateY(0);" id="educationContainer">
+                <h3>Add eduction details</h3>
+                <div class="form-group  mt-2 ">
+                    <label for="universityList" class="text-left">University:</label>
+                    <select id="universityList" name="University" class="form-control" onblur="validateUniversity(this)"></select>
+                    <span id="error-universityList" class="text-danger"></span>
+                    </div>
+                        <div class="form-group  mt-2 ">
+                            <label for="major">Major:</label>
+                            <select id="major" name="Major" class="form-control " onblur="validateMajor(this)">
+                                <option value="">Please select</option>
+                                <option value="Computer Application">Computer Application</option>
+                                <option value="Computer Science">Computer Science</option>
+                                <option value="Computer Engineering">Computer Engineering</option>
+                            </select>
+                            <span id="error-major" class="text-danger"></span>
+                        </div>
+                        <div class="form-group  mt-2 ">
+                            <label for="degree">Degree:</label>
+                            <select id="degree" name="Degree" class="form-control " onblur="validateDegree(this)">
+                                <option value="">Please select</option>
+                                <option value="Master">Master</option>
+                                <option value="Graduation">Graduation</option>
+                                <option value="Ph.D.">Ph.D.</option>
+                            </select>
+                            <span id="error-degree" class="text-danger"></span>
+                        </div>
+                        <div class="form-group  mt-2 ">
+                            <label for="graduationYear">Graduation year:</label>
+                            <select id="graduationYear" name="GraduationYear" class="form-control" onblur="validateGraduationYear(this)">
+                            </select>
+                            
+                            <span id="error-graduationYear" class="text-danger"></span>
+                        </div>
+                        <label for="gpa">GPA:</label>
+                        <input type="number" step="0.01" id="gpa" name="Gpa" placeholder="GPA" class="form-control" onblur="validateGPA(this)">
+                        <span id="error-gpa" class="text-danger"></span>
+                        <input type="submit" value="Submit" class="btn-reg mt-2">
+                    </div>
+</form>
+    </div>
+</div>
+@section Scripts {
+    @Scripts.Render("~/Scripts/jquery-3.7.1.min.js")
+    @Scripts.Render("~/Scripts/MyScripts/select2.min.js")
+}
+<script src="~/Scripts/jquery-3.7.1.min.js"></script>
+<script src="~/Scripts/MyScripts/select2.min.js"></script>
+<script src="~/Scripts/MyScripts/main.js"></script>
+<script>
+
+    $(document).ready(function () {
+        populateYearDropdown();
+        $("#universityList").select2({
+            placeholder: "Select university",
+            allowClear: true,
+            width: '100%'
+        });
+
+        $.getJSON('/Scripts/data.json', function (data) {
+            data.forEach(function (university) {
+                $("#universityList").append(`<option value="${university.name}">${university.name}</option>`);
+            });
+        })
+            .fail(function (error) {
+                console.error('Error loading local JSON file:', error);
+            });
+    });
+</script>
+

@@ -1,0 +1,58 @@
+﻿@model JobPortal.Models.Login
+
+@{
+    ViewBag.Title = "Login";
+    Layout = "~/Views/Shared/MainLayout.cshtml";
+}
+
+<div class="container-fluid mt-5">
+    <div class="row justify-content-center">
+        <div class="col-md-3">
+            <img src="~/Content/Static/role-collection-ot.png" />
+        </div>
+        <div class="col-md-4 mt-4">
+            <div class="card p-3" style="transform: translateX(0)">
+                <h2 class="text-center">Login</h2>
+                <form action="/Home/Login" method="post" onsubmit="return validateForm();">
+                    @Html.AntiForgeryToken()
+                    <div class="form-group mt-2">
+                        <label for="Username">Username</label>
+                        <input type="text" name="Username" id="Username" placeholder="Username" class="form-control" style="border-radius: 20px" />
+                        <span id="error-username" class="text-danger"></span>
+                    </div>
+                    <div class="form-group mt-2">
+                        <label for="Password">Password</label>
+                        <input type="password" name="Password" id="Password" placeholder="Password" class="form-control" style="border-radius: 20px" />
+                        <span id="error-password" class="text-danger"></span>
+                    </div>
+                    <div class="form-group text-center mt-2">
+                        <input type="checkbox" id="remember">
+                        <label for="remember" title="Coming soon">Remember Me</label> &nbsp;
+                        <a href="#" style="text-decoration: none;" title="Coming soon">Forgot Password?</a>
+                    </div>
+                    <div class="form-group text-center">
+                        <div class="col-md-10 mt-2 ">
+                            <input type="submit" value="Login" class="btn-reg" />
+                        </div>
+                    </div>
+                </form>
+                <div class="act-link text-center mt-2">
+                    <p>Not a member? <a href="@Url.Action("JobSeekerRegister","Home")" style="text-decoration:none">Register now</a></p>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="~/Scripts/MyScripts/main.js"></script>
+
+<script>
+    function preventBack() {
+        window.history.forward();
+    }
+    setTimeout("preventBack()", 0);
+    window.onunload = function () {
+        null;
+    }
+</script>

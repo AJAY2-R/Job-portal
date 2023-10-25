@@ -1,0 +1,146 @@
+﻿@model JobPortal.Models.JobSeekerModel
+@{
+    ViewBag.Title = "Claysys job portal";
+    Layout = "~/Views/Shared/JobSeekerLayout.cshtml";
+
+}
+@{
+    DateTime originalDate = Model.Birthdate;
+    string formattedDate = originalDate.ToString("yyyy-MM-dd");
+}
+
+
+<div class="d-flex justify-content-center mt-5">
+    <div class="col-md-6">
+        <div class="card p-3" style="border: none; transform: translateY(0);">
+
+            <h3>Update Profile </h3>
+            <form action="@Url.Action("UpdateProfile","JobSeeker")" method="post" enctype="multipart/form-data" onsubmit="return validateUpdateForm()">
+                @Html.AntiForgeryToken()
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="form-group mt-2">
+                            <label for="FirstName">First name</label>
+                            <input type="text" name="FirstName" id="FirstName" class="form-control" value="@Model.FirstName" placeholder="First name" onfocusout="validateFname(this)">
+                            <span id="error-fname" class="error-msg"></span>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group mt-2">
+                            <label for="LastName">Last name</label>
+                            <input type="text" name="LastName" id="LastName" placeholder="Last name" value="@Model.LastName" class="form-control" onfocusout="validateLname(this)">
+                            <span id="error-lname" class="error-msg"></span>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group mt-2">
+                    <label for="Experience">Experience</label>
+                    <select name="Experience" class="form-control" onfocusout="validateExperience()">
+                        <option>Experience</option>
+                        <option value="0" @if (Model.Experience == 0) { <text> selected</text> }>Fresher</option>
+                        <option value="1" @if (Model.Experience == 1) { <text> selected</text> }>1 Year</option>
+                        <option value="2" @if (Model.Experience == 2) { <text> selected</text> }>2 Year</option>
+                        <option value="3" @if (Model.Experience == 3) { <text> selected</text> }>3 Year</option>
+                        <option value="4" @if (Model.Experience == 4) { <text> selected</text> }>4 Year</option>
+                        <option value="5" @if (Model.Experience == 5) { <text> selected</text> }>5 Year</option>
+                    </select>
+                    <span id="error-experience" class="error-msg"></span>
+                </div>
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="form-group mt-2">
+                            <label for="dob">Date of birth</label><br>
+                            <input type="date" name="BirthDate" id="DateOfBirth" value="@formattedDate" class="form-control" onblur="validateDate(this)">
+                            <p id="age"></p>
+                            <span id="error-date" class="error-msg"></span>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="rform-input-sele mt-2">
+                            <label>Gender</label><br>
+                            <input type="radio" name="Gender" id="male" value="M" @if (Model.Gender == "M") { <text> checked</text> }>
+                            Male
+                            <input type="radio" name="Gender" id="female" value="F" @if (Model.Gender == "F") { <text> checked</text> }>
+                            Female
+                            <input type="radio" name="Gender" id="other" value="O" @if (Model.Gender == "O") { <text> checked</text> }>
+                            Other
+                            <span id="error-gender" class="error-msg"></span>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group mt-2">
+                    <input type="number" name="PhoneNumber" class="form-control" value="@Model.PhoneNumber" id="PhoneNumber" placeholder="Phone number"
+                           onfocusout="validatePhone(this)">
+                    <span id="error-phone" class="error-msg"></span>
+                </div>
+                <div class="form-group mt-2">
+                    <input type="text" name="Email" id="Email" class="form-control" value="@Model.Email" placeholder="Email address"
+                           onfocusout="validateEmail(this)">
+                    <span id="error-email" class="error-msg"></span>
+                </div>
+                <div class="form-group">
+                    <label for="address">Address</label><br>
+                    <input type="text" name="Address" id="Address" class="form-control" value="@Model.Address" onfocusout="validateAddress(this)">
+                    <span id="error-address" class="error-msg"></span>
+                </div>
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="form-group mt-2">
+                            <label for="state">Sate</label>
+                            <select name="State" id="state" class="form-control" onchange="updateCity()" onfocusout="validateStateCity()">
+                                <option>Select a state</option>
+                            </select>
+                            <span id="error-city" class="error-msg"></span>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group mt-2">
+                            <label for="city">City</label>
+                            <select name="City" id="city" class="form-control" onfocusout="validateStateCity()">
+                                <option>Select a city</option>
+                            </select>
+                            <span id="error-state" class="error-msg"></span>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group mt-2">
+                    <label for="imageUpload">Profile picture</label>
+                    <input type="file" name="imageUpload" id="imageUpload" class="form-control" accept=".png, .jpg" onchange="validateImage(this)">
+                    <span id="error-image" class="text-danger"></span>
+                </div>
+                <div class="form-group mt-2">
+                    <div class="col-md-offset-2 col-md-10">
+                        <input type="submit" value="Update" class="btn-reg">
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}
+<script src="~/Scripts/MyScripts/main.js"></script>
+
+<script>
+stateData.forEach((state) => {
+    const option = document.createElement('option');
+    option.value = state.name;
+    option.text = state.name;
+    stateSelect.appendChild(option);
+});
+document.addEventListener('DOMContentLoaded', function () {
+    updateCity();
+    const existingState = "@Model.State"; 
+    if (existingState) {
+        stateSelect.value = existingState;
+        updateCity();
+    }
+    const existingCity = "@Model.City";
+    if (existingCity) {
+        citySelect.value = existingCity;
+    }
+    disableFutureDates(document.getElementById("DateOfBirth"));
+});
+</script>

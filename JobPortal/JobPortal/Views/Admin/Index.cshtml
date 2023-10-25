@@ -1,0 +1,78 @@
+﻿@model IEnumerable<JobPortal.Models.JobDetails>
+@{
+    ViewBag.Title = "Admin";
+    Layout = "~/Views/Shared/AdminLayout.cshtml";
+}
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.0/css/all.min.css">
+<h3 class="mt-4">Hello @Session["Admin"]</h3>
+<div class="container-fluid mt-2">
+    <div class="row">
+        <div class="col-md-4 mt-2 ">
+            <a href="@Url.Action("Skills","Admin")">
+                <div class="cus-box">
+                    <ul class="txt-img-top">
+                        <li>Add new skill</li>
+                        <li>Remove skill</li>
+                    </ul>
+                    <div class="txt-img"><i class="fas fa-cogs fa-1x "></i> Skills</div>
+                </div>
+            </a>
+        </div>
+        <div class="col-md-4 mt-2">
+            <a href="@Url.Action("Categories","Admin")">
+                <div class="cus-box2">
+                    <ul class="txt-img-top">
+                        <li>Add new category</li>
+                        <li>Remove category</li>
+                    </ul>
+                    <div class="txt-img"> <i class="fas fa-folder-open fa-1x"></i>  Categories</div>
+                </div>
+            </a>
+        </div>
+
+        <div class="col-md-4 mt-2">
+            <a href="@Url.Action("AddAdmin","Admin")">
+                <div class="cus-box3">
+                    <div class="txt-img"> <i class="fas fa-user-cog fa-1x"></i> Add Admin</div>
+                </div>
+            </a>
+        </div>
+        <div class="col-md-4 mt-2">
+            <a href="@Url.Action("VerifyEmployer","Admin")">
+                <div class="cus-box4">
+                    <div class="txt-img"> <i class="fas fa-check-circle fa-1x"></i>  Verify Employer</div>
+                </div>
+            </a>
+        </div>
+        <div class="col-md-4 mt-2">
+            <a href="@Url.Action("ContactMessages","Admin")">
+                <div class="cus-box">
+                    <div class="txt-img"> <i class="fas fa-comment  fa-1x"></i>  Messages</div>
+                </div>
+            </a>
+        </div>
+        <div class="col-12 mt-2">
+            <h3>Trending jobs</h3>
+            @foreach (var item in Model.OrderByDescending(model => model.NumberOfViews).ThenByDescending(model=>model.JobID).Take(3))
+            {
+                if (item.IsPublished && item.ApplicationDeadline >= DateTime.Now)
+                {
+                    <div class="row mt-2">
+                        <div class="card p-2">
+                            <div class="row">
+                                <div class="col-md-2">
+                                    <img alt="CompanyLogo" src="data:jpg/png;base64,@Convert.ToBase64String(item.CompanyLogo)" class="rounded" width=80x height=80px />
+                                </div>
+                                <div class="col-md-10">
+                                    <h5>@item.JobTitle</h5>
+                                    <p>Views : @item.NumberOfViews  Applications : @item.NumberOfApplications</p>
+                                    @Html.ActionLink("Details", "JobDetails", new { id = item.JobID })
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                }
+            }
+        </div>
+    </div>
+    </div>

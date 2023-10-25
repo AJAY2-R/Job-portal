@@ -1,0 +1,132 @@
+﻿@model JobPortal.Models.JobSeekerProfile
+@{
+    ViewBag.Title = "Profile";
+    Layout = "~/Views/Shared/EmployerLayout.cshtml";
+}
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<div class="container-fluid mt-4">
+    <div class="row ">
+        <div class="col-md-12" style="text-align:center">
+            <img alt="Profile Picture " src="data:jpg/png;base64,@Convert.ToBase64String(Model.JobSeekerDetails.Image)" class="rounded-circle" width="200px" height="200px" />
+            <h3>
+                @Model.JobSeekerDetails.FirstName @Model.JobSeekerDetails.LastName </a>
+
+            </h3>
+            <h5 class="mb-2">@Model.JobSeekerDetails.Username</h5>
+            <a href="@Url.Action("SendMessage", "Employer", new {id=Model.JobSeekerDetails.SeekerId})" class="chat-link " >Send message</a>
+        </div>
+    </div>
+    <div class="row mt-3">
+        <div class="col-md-8">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="card p-2" style=" box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); border: none">
+                        <h4>Personal details</h4>
+                        <dl class="dl-horizontal mt-2">
+                            <dt>First name:</dt>
+                            <dd>@Model.JobSeekerDetails.FirstName</dd>
+
+                            <dt>Last name:</dt>
+                            <dd>@Model.JobSeekerDetails.LastName</dd>
+
+                            <dt>Email:</dt>
+                            <dd>@Model.JobSeekerDetails.Email</dd>
+
+                            <dt>Gender:</dt>
+                            <dd>
+                                @if (Model.JobSeekerDetails.Gender == "M")
+                                {
+                                    <text>Male</text>
+                                }
+                                else if (Model.JobSeekerDetails.Gender == "F")
+                                {
+                                    <text>Female</text>
+                                }
+                                else if (Model.JobSeekerDetails.Gender == "O")
+                                {
+                                    <text>Other</text>
+                                }
+                            </dd>
+
+                            <dt>Date of birth:</dt>
+                            <dd>@Model.JobSeekerDetails.Birthdate.ToString("yyyy/MM/dd")</dd>
+
+                            <dt>Phone number:</dt>
+                            <dd>@Model.JobSeekerDetails.PhoneNumber</dd>
+
+                            <dt>Experience:</dt>
+                            <dd>@Model.JobSeekerDetails.Experience Years</dd>
+                            <dt>Address :</dt>
+                            <dd>@Model.JobSeekerDetails.Address</dd>
+                            <dd>@Model.JobSeekerDetails.City , @Model.JobSeekerDetails.State </dd>
+
+                        </dl>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-12 mt-2">
+                <div class="card p-2" style=" box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); border: none">
+                    <h4>Resume</h4>
+                    <a href="#" id="toggleResume">View Resume</a>
+                    <embed id="resumeEmbed" src="" width="100%" height="600px" style="display: none;">
+                </div>
+            </div>
+
+        </div>
+        <div class="col-md-4">
+            <div class="card p-2" style=" box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); border: none">
+                <h4>Skills</h4>
+                <div class="row p-3">
+                    <div class="d-flex flex-wrap ">
+                        @foreach (var skill in Model.Skills)
+                        {
+                            <div class="skill m-1">@skill.SkillName </div>
+                        }
+                    </div>
+
+                </div>
+
+            </div>
+            <div class="row mt-4">
+                <div class="col-md-12 p-2">
+                    <div class="card p-2" style=" box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); border: none">
+                        <h4>Education</h4>
+                        @foreach (var detail in Model.EducationDetails)
+                        {
+                            <div class="col-md-12 mt-2">
+                                <div class="card p-3">
+                                 
+                                    <h5> @detail.University</h5>
+                                    @detail.Major - @detail.Degree <br />
+                                    GPA : @detail.Gpa <br />
+                                    Year of passout : @detail.GraduationYear
+                                </div>
+                            </div>
+                        }
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+</div>
+
+
+<script>
+    var resumeIsVisible = false;
+    document.getElementById("toggleResume").addEventListener("click", function(event) {
+        event.preventDefault();
+        if (resumeIsVisible) {
+            document.getElementById("resumeEmbed").style.display = "none";
+            document.getElementById("toggleResume").textContent = "View Resume";
+        } else {
+            var pdfDataUri = 'data:application/pdf;base64,@Convert.ToBase64String(Model.JobSeekerDetails.Resume)';
+            document.getElementById("resumeEmbed").src = pdfDataUri;
+            document.getElementById("resumeEmbed").style.display = "block";
+            document.getElementById("toggleResume").textContent = "Hide Resume";
+        }
+        resumeIsVisible = !resumeIsVisible;
+    });
+</script>

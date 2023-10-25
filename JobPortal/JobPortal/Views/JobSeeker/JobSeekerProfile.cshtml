@@ -1,0 +1,192 @@
+﻿@model JobPortal.Models.JobSeekerProfile
+@{
+    ViewBag.Title = "Profile";
+    Layout = "~/Views/Shared/JobSeekerLayout.cshtml";
+}
+<link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/css/select2.min.css" rel="stylesheet" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<div class="container-fluid mt-4">
+    <div class="row ">
+        <div class="col-md-12" style="text-align:center">
+            <img alt="Profile Picture " src="data:jpg/png;base64,@Convert.ToBase64String(Model.JobSeekerDetails.Image)" class="rounded-circle" width="200px" height="200px" />
+            <h3>
+                @Model.JobSeekerDetails.FirstName @Model.JobSeekerDetails.LastName <a href="@Url.Action("UpdateProfile")" title="Edit profile"> <i class="fa fa-edit"></i></a>
+
+            </h3>
+            <h5>@Model.JobSeekerDetails.Username</h5>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-8">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="card p-2" style=" box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); border: none">
+                        <h4>Personal details</h4>
+                        <dl class="dl-horizontal mt-2">
+                            <dt>First name:</dt>
+                            <dd>@Model.JobSeekerDetails.FirstName</dd>
+
+                            <dt>Last name:</dt>
+                            <dd>@Model.JobSeekerDetails.LastName</dd>
+
+                            <dt>Email:</dt>
+                            <dd>@Model.JobSeekerDetails.Email</dd>
+
+                            <dt>Gender:</dt>
+                            <dd>
+                                @if (Model.JobSeekerDetails.Gender == "M")
+                                {
+                                    <text>Male</text>
+                                }
+                                else if (Model.JobSeekerDetails.Gender == "F")
+                                {
+                                    <text>Female</text>
+                                }
+                                else if (Model.JobSeekerDetails.Gender == "O")
+                                {
+                                    <text>Other</text>
+                                }
+                            </dd>
+
+                            <dt>Date of birth:</dt>
+                            <dd>@Model.JobSeekerDetails.Birthdate.ToString("yyyy/MM/dd")</dd>
+
+                            <dt>Phone number:</dt>
+                            <dd>@Model.JobSeekerDetails.PhoneNumber</dd>
+
+                            <dt>Experience:</dt>
+                            <dd>@Model.JobSeekerDetails.Experience Years</dd>
+                            <dt>Address :</dt>
+                            <dd>@Model.JobSeekerDetails.Address</dd>
+                            <dd>@Model.JobSeekerDetails.City , @Model.JobSeekerDetails.State </dd>
+
+                        </dl>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-12 mt-2">
+                <div class="card p-2" style=" box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); border: none">
+                    <h4>Resume</h4>
+                    <button type="button" class="btn btn-outline-primary" id="showFormButton">
+                        Update Resume
+                    </button>
+
+                    <div id="resumeForm" class="m-2" style="display: none;">
+                        <form action="@Url.Action("UpdateResume","JobSeeker")" method="post" enctype="multipart/form-data">
+                            <input type="file" class="form-control" name="resumeFile" required />
+                            <input type="submit" value="Update" class="btn btn-outline-secondary" />
+                        </form>
+                    </div>
+                    <a href="#" id="toggleResume" class="btn btn-primary mt-2">View Resume</a>
+                    <embed id="resumeEmbed" src="" width="100%" height="600px" style="display: none;">
+                    @Html.ActionLink("Change password", "ChangePassword", "JobSeeker")
+                </div>
+            </div>
+
+        </div>
+        <div class="col-md-4">
+            <div class="card p-2" style=" box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); border: none">
+                <h4>Skills</h4>
+                <a title="Add skill" id="showAddSkill"><i class="fa fa-plus "></i></a>
+                <div class="row p-3">
+                    <div class="d-flex flex-wrap ">
+                        @foreach (var skill in Model.Skills)
+                        {
+                            <div class="skill m-1">@skill.SkillName <a href="DeleteJobSeekerSkill/@skill.JobSeekerSkillId"><i class="fa fa-times"></i></a></div>
+                        }
+                    </div>
+
+                </div>
+                <div id="skillForm" style="display: none;">
+                    <form method="post" action="@Url.Action("AddSkill","JobSeeker")">
+                        <select id="skills" name="SkillId" multiple="multiple" width="100%" style="width=" 100%!important">
+                            @foreach (var skill in Model.AllSkills)
+                            {
+                                <option value="@skill.SkillId">@skill.SkillName</option>
+                            }
+                        </select>
+                        <input type="submit" value="Submit" class="btn-reg mt-2"/>
+                    </form>
+                </div>
+            </div>
+            <div class="row mt-4">
+                <div class="col-md-12 p-2">
+                    <div class="card p-2" style=" box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); border: none">
+                        <h4>Education</h4>
+                        <a href="AddEducationDetails" title="Add education details"><i class="fa fa-plus "></i></a>
+                        @foreach (var detail in Model.EducationDetails)
+                        {
+                            <div class="col-md-12 mt-2">
+                                <div class="card p-3">
+                                    <div style="text-align:right;">
+                                        <a href="UpdateEducationDetails/@detail.EducationId" style="color:gray" title="Edit"><i class="fa fa-edit"></i></a>
+                                        <a href="DeleteEducationDetails/@detail.EducationId" style="color:red" title="Delete"><i class="fa fa-times"></i></a>
+                                    </div>
+                                    <h5> @detail.University</h5>
+                                    @detail.Major - @detail.Degree <br />
+                                    GPA : @detail.Gpa <br />
+                                    Year of passout : @detail.GraduationYear
+                                </div>
+                            </div>
+                        }
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+</div>
+@section Scripts {
+    @Scripts.Render("~/Scripts/jquery-3.7.1.min.js")
+    @Scripts.Render("~/Scripts/MyScripts/select2.min.js")
+}
+<script src="~/Scripts/MyScripts/select2.min.js"></script>
+<script src="~/Scripts/jquery-3.7.1.min.js"></script>
+
+<script>
+    var resumeIsVisible = false;
+    document.getElementById("toggleResume").addEventListener("click", function(event) {
+        event.preventDefault();
+        if (resumeIsVisible) {
+            document.getElementById("resumeEmbed").style.display = "none";
+            document.getElementById("toggleResume").textContent = "View Resume";
+        } else {
+            var pdfDataUri = 'data:application/pdf;base64,@Convert.ToBase64String(Model.JobSeekerDetails.Resume)';
+            document.getElementById("resumeEmbed").src = pdfDataUri;
+            document.getElementById("resumeEmbed").style.display = "block";
+            document.getElementById("toggleResume").textContent = "Hide Resume";
+        }
+        resumeIsVisible = !resumeIsVisible;
+    });
+
+    document.getElementById('showFormButton').addEventListener('click', function () {
+        var form = document.getElementById('resumeForm');
+        if (form.style.display === 'none' || form.style.display === '') {
+            form.style.display = 'block';
+        } else {
+            form.style.display = 'none';
+        }
+    });
+    document.getElementById('showAddSkill').addEventListener('click', function (e) {
+        e.preventDefault();
+        var form = document.getElementById('skillForm');
+        if (form.style.display === 'none' || form.style.display === '') {
+            form.style.display = 'block';
+        } else {
+            form.style.display = 'none';
+        }
+    });
+    $(document).ready(function () {
+        $('#skills').select2();
+    });
+</script>
+<script>
+    function preventBack() {
+        window.history.forward();
+    }
+    setTimeout("preventBack()", 0);
+    window.onunload = function () {
+        null;
+    }
+</script>

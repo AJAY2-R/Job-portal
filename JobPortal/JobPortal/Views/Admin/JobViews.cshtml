@@ -1,0 +1,32 @@
+﻿@model IEnumerable<JobPortal.Models.JobViewers>
+
+@{
+    ViewBag.Title = "JobViews";
+    Layout = "~/Views/Shared/AdminLayout.cshtml";
+}
+<div class="container mt-4">
+    <h4>Job views  </h4>
+    <h5>Job id  :  @Model.First().JobId</h5>
+    <h5>Number of views : @Model.Count()</h5>
+    <div class="container text-center">
+        <table class="table table-bordered">
+            <thead>
+                <tr>
+                    <th>View ID</th>
+                    <th>Username</th>
+                    <th>View date&time</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td>@item.ViewId</td>
+                        <td><a href="@Url.Action("JobSeekerProfile","Admin",new {id=item.SeekerId})"> @item.Username </a></td>
+                        <td>@item.ViewDateTime</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>

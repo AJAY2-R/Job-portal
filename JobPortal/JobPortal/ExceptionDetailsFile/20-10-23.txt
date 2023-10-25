@@ -1,0 +1,24 @@
+-----------Exception Details on  20-10-2023 03:27:30 PM-----------------
+-------------------------------------------------------------------------------------
+
+
+
+Log Written Date: 20-10-2023 03:27:30 PM
+
+Error Line No : ine 492
+
+Error Message: NullReferenceException
+
+Exception Type: System.NullReferenceException
+
+Error Location : Object reference not set to an instance of an object.
+
+ Error Page Url: https://localhost:44377/JobSeeker/ChatList
+
+User Host IP: 
+
+
+--------------------------------*End*------------------------------------------
+
+
+

@@ -1,0 +1,61 @@
+﻿@model IEnumerable<JobPortal.Models.JobDetails>
+@{
+    ViewBag.Title = "Home";
+    Layout = "~/Views/Shared/EmployerLayout.cshtml";
+}
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<div class="container-fluid  mt-5">
+    <div class="row ">
+        <h3>Hello @Session["EmployerUsername"]</h3>
+        <div class="col-md-6">
+            <div class="cus-card">
+                <a href="@Url.Action("AddJobVacancy","Employer")">
+                    <img src="~/Content/Static/mp6swi3s.png" />
+                    <div class="txt-img"> Announce a job vacancy</div>
+                </a>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="cus-card">
+                <a href="@Url.Action("Vacancies","Employer")">
+                    <img src="~/Content/Static/a1w0voch.png" />
+                    <div class="txt-img">Vacancies announced</div>
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="row m-3">
+    <h4>Recently posted jobs</h4>
+    @foreach (var item in Model.OrderByDescending(job=>job.JobID).Take(3))
+    {
+        <div class="col-md-4">
+            <div class="card ">
+                <div class="card-body">
+                    <h5 class="card-title">@item.JobTitle</h5>
+                    <p class="card-text">
+                        <i class="fa fa-eye"></i> Views :
+                        @item.NumberOfViews
+                        <div>
+                            <i class="fa fa-users"></i> Applicants :
+                            @item.NumberOfApplications
+                        </div>
+                    </p>
+                    @Html.ActionLink("Applications", "Applications", "Employer", new { id = item.JobID }, new { @class = "btn btn-info btn-sm" })
+                </div>
+            </div>
+        </div>
+    }
+</div>
+<script>
+     function preventBack() {
+         window.history.forward();
+     }
+
+     setTimeout(preventBack, 0);
+
+     window.onunload = function () {
+         null;
+     };
+</script>

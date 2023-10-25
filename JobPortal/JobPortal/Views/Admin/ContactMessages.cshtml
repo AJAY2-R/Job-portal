@@ -1,0 +1,32 @@
+﻿@model List<JobPortal.Models.ContactMessage>
+@{
+    ViewBag.Title = "ContactMessages";
+    Layout = "~/Views/Shared/AdminLayout.cshtml";
+}
+<div class="container mt-4">
+    <h2>Contact messages</h2>
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>First name</th>
+                <th>Last name</th>
+                <th>Email</th>
+                <th>Message</th>
+                <th>Date & Time</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var message in Model)
+            {
+                <tr>
+                    <td>@message.FirstName</td>
+                    <td>@message.LastName</td>
+                    <td>@message.Email</td>
+                    <td>@message.Message</td>
+                    <td>@message.DateTime.ToString("yyyy-MM-dd HH:mm:ss")</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
+

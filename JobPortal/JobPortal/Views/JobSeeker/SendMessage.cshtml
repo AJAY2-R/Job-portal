@@ -1,0 +1,113 @@
+﻿@model IEnumerable<JobPortal.Models.ChatMessage>
+@{
+    ViewBag.Title = "SendMessage";
+    Layout = "~/Views/Shared/JobSeekerLayout.cshtml";
+}
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+<div class="container d-flex justify-content-center mt-3">
+    <div class="col-md-8">
+        <div class="message-bg">
+            <div class="card p-3" style="transform: translateX(0); background-color: #caf0f8;">
+                <div class="row">
+                    <div class="message-head">
+                        <div class="row mt-2">
+                            <div class="col-md-1 mt-1">
+                                <div class="character-picture">@Model.First().CompanyName[0]</div>
+                            </div>
+                            <div class="col-md-11 mt-2">
+                                <h4>@Model.First().CompanyName</h4>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- Message start -->
+                <div class="row">
+                    <div class="message-body" id="messageBody">
+                        @foreach (var message in Model)
+                        {
+                            <!-- Receiver -->
+                            if (message.Sender == 'E')
+                            {
+                                <div class="row">
+                                    <div class="col-md-4">
+                                        <div class="message-con">
+                                            <div class="upper-text">@message.CompanyName</div>
+                                            <div class="message-container">
+                                                <div class="message">@Html.Raw(message.Message.Replace(Environment.NewLine, "<br />"))</div>
+                                            </div>
+                                            <div class="lower-tex">@message.DateAndTime</div>
+                                        </div>
+                                    </div>
+                                </div>
+                            }
+                            else
+                            {
+                                <!-- Sender -->
+                                <div class="row">
+                                    <div class="col-md-4 offset-md-8">
+                                        <div class="message-con text-right">
+                                            <div class="upper-text">You</div>
+                                            <div class="message-container">
+                                                <div class="message">@Html.Raw(message.Message.Replace(Environment.NewLine, "<br />"))</div>
+                                            </div>
+                                            <div class="lower-tex">@message.DateAndTime</div>
+                                        </div>
+                                    </div>
+                                </div>
+                            }
+                        }
+                    </div>
+                </div>
+                <!-- Message body end -->
+                <div class="row">
+                    <div class="col-md-10">
+                        <div class="message-input">
+                            <textarea class="form-control" id="Message" rows="2" placeholder="Write something"></textarea>
+                        </div>
+                    </div>
+                    <div class="col-md-2">
+                        <button class="icon-button" id="sendButton">
+                            <i class="fas fa-paper-plane"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<script src="~/Scripts/jquery-3.7.1.min.js"></script>
+<script>
+    $(document).ready(function () {
+        var messageBody = document.querySelector('#messageBody');
+    });
+    messageBody.scrollTop = messageBody.scrollHeight - messageBody.clientHeight;
+    $("#sendButton").on("click", function () {
+        var id = @Model.First().EmployerID;
+        var message = $("#Message").val();
+        if (message != "") {
+            sendMessageToController(id, message);
+        }
+    });
+
+    function sendMessageToController(id, message) {
+        var data = {
+            id: id,
+            message: message
+        };
+        $.ajax({
+            url: "@Url.Action("SendMessage","JobSeeker")",
+            type: "POST",
+            data: data,
+            success: function (response) {
+                console.log("Message sent successfully.");
+                window.location.reload();
+            },
+            error: function (error) {
+                console.error("Error sending message: " + error.statusText);
+            }
+        });
+    }
+
+</script>

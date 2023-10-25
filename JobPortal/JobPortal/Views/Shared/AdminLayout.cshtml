@@ -1,0 +1,99 @@
+﻿
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="~/icon.png" type="image/x-icon">
+    <title>@ViewBag.Title - Admin</title>
+    @Styles.Render("~/Content/MyCss/site.css")
+    @Scripts.Render("~/bundles/modernizr")
+    <link href="~/Content/bootstrap.min.css" rel="stylesheet" type="text/css" />
+    <script src="~/Scripts/modernizr-2.8.3.js"></script>
+</head>
+<body>
+    <navbar>
+        <div class="cus-navbar-logo">
+            <a href="/Admin"><img src="~/Content/Static/claysys-logo.png"></a>
+        </div>
+        <div class="cus-navbar">
+            <a href="@Url.Action("Jobs","Admin")">Jobs</a>
+            <a href="@Url.Action("Employers","Admin")">Employers </a>
+            <a href="@Url.Action("JobSeekers","Admin")">Job Seekers</a>
+            <div class="cus-dropdown">
+                <button class="cus-dropbtn"><img src="~/Content/Static/360_FF.jpg" class="rounded-circle" height="40px" /></button>
+                <div class="cus-dropdown-content">
+                    <a href="@Url.Action("ChangePassword","Admin")">Change Password</a>
+                    <a href="@Url.Action("Logout","Admin")">Logout</a>
+                </div>
+            </div>
+        </div>
+    </navbar>
+
+    @{
+        string message = TempData["Message"] as string;
+        if (!String.IsNullOrEmpty(message))
+        {
+            <div class="alert alert-success alert-dismissible fade show" role="alert">
+                <strong>Success!</strong> @message
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+
+            <script>
+                function preventBack() {
+                    window.history.forward();
+                }
+
+                setTimeout(preventBack, 0);
+
+                window.onunload = function () {
+                    null;
+                };
+            </script>
+        }
+    }
+
+    <div class="container body-content">
+        @RenderBody()
+    </div>
+
+
+    <footer class="row row-cols-5 py-5 my-5 border-top">
+        <div class="col">
+            <a href="/" class="d-flex align-items-center mb-3 link-dark text-decoration-none">
+                <svg class="bi me-2" width="40" height="32"><img src="~/Content/Static/claysys-logo.png"></svg>
+
+            </a>
+
+        </div>
+        <div class="col">
+
+        </div>
+        <div class="col">
+            <ul class="nav flex-column">
+                <li class="nav-item mb-2"><a href="#" class="nav-link p-0 text-muted">About us</a></li>
+                <li class="nav-item mb-2"><a href="#" class="nav-link p-0 text-muted">Careers</a></li>
+                <li class="nav-item mb-2"><a href="#" class="nav-link p-0 text-muted">Site map</a></li>
+                <li class="nav-item mb-2"><a href="#" class="nav-link p-0 text-muted">FAQs</a></li>
+            </ul>
+        </div>
+        <div class="col">
+            <ul class="nav flex-column">
+                <li class="nav-item mb-2"><a href="#" class="nav-link p-0 text-muted">Help center</a></li>
+                <li class="nav-item mb-2"><a href="#" class="nav-link p-0 text-muted">Reposrt issue</a></li>
+                <li class="nav-item mb-2"><a href="#" class="nav-link p-0 text-muted">Privacy & Policy</a></li>
+                <li class="nav-item mb-2"><a href="#" class="nav-link p-0 text-muted">Fraud alert</a></li>
+            </ul>
+        </div>
+    </footer>
+    <div class="copy-right" align="center">
+        &copy; @DateTime.Now.Year Claysys technologies
+    </div>
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/bootstrap")
+    @RenderSection("scripts", required: false)
+</body>
+</html>
+

@@ -1,0 +1,76 @@
+﻿@model IEnumerable<JobPortal.Models.EmployerModel>
+
+@{
+    ViewBag.Title = "VerfiyEmployer";
+    Layout = "~/Views/Shared/AdminLayout.cshtml";
+}
+
+<div class="container mt-5">
+    <h2>Verify Employers</h2>
+    <div class="col-md-4 ">
+        <div class="input-group mb-3">
+            <input type="text" id="search" class="form-control" placeholder="Search....">
+            <button id="searchButton" class="btn btn-primary">Search</button>
+        </div>
+    </div>
+    @if (!Model.Any())
+    {
+        <text>No pending verification</text>
+    }
+    else
+    {
+        <table class="table table-striped table-bordered table-hover">
+            <thead class="thead-dark">
+                <tr>
+                    <th>Company logo</th>
+                    <th>Company name</th>
+                    <th>Official email</th>
+                    <th>Website</th>
+                    <th>Employer name</th>
+                    <th>Designation</th>
+                    <th>Email</th>
+                    <th>Contact number</th>
+                    <th>Status</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model.OrderByDescending(emp => emp.Status == "Approved"))
+                {
+                    <tr>
+                        <td><img src="data:image/png;base64,@Convert.ToBase64String(item.CompanyLogo)" width="100px" height="100px" /></td>
+                        <td>@Html.DisplayFor(modelItem => item.CompanyName)</td>
+                        <td>@Html.DisplayFor(modelItem => item.OfficialEmail)</td>
+                        <td>@Html.DisplayFor(modelItem => item.Website)</td>
+                        <td>@Html.DisplayFor(modelItem => item.Name)</td>
+                        <td>@Html.DisplayFor(modelItem => item.Designation)</td>
+                        <td>@Html.DisplayFor(modelItem => item.Email)</td>
+                        <td>@Html.DisplayFor(modelItem => item.ContactPhone)</td>
+                        <td>@Html.DisplayFor(modelItem => item.Status)</td>
+                        <td>
+                            @Html.ActionLink("Approve", "EmployerApprove", new { id = item.EmployerID }, new { @class = "btn btn-info" })
+                            @Html.ActionLink("Reject", "EmployerReject", new { id = item.EmployerID }, new { @class = "btn btn-danger" })
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    }
+</div>
+<script src="~/Scripts/jquery-3.7.1.min.js"></script>
+<script>
+    $(document).ready(function () {
+        $("#searchButton").click(function () {
+            var searchText = $("#search").val().toLowerCase();
+            $("table tbody tr").each(function () {
+                var companyName = $(this).find("td:nth-child(2)").text().toLowerCase();
+                if (companyName.includes(searchText)) {
+                    $(this).show();
+                } else {
+                    $(this).hide();
+                }
+            });
+        });
+    });
+</script>
+

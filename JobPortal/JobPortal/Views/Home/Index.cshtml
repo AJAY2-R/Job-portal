@@ -1,0 +1,39 @@
+﻿
+@{
+    ViewBag.Title = "Claysys job portal";
+    Layout = "~/Views/Shared/MainLayout.cshtml";
+}
+
+<div class="d-center">
+    <div class="container">
+        <div class="row justify-content-center align-items-center text-center">
+            <h1 class="h1-heading">Find your dream job now</h1>
+            <p>5 lakh+ jobs for you to explore</p>
+        </div>
+    </div>
+    <div class="event-swiper"><img src="~/Content/Static/eventsSwiperLeft-ot.png" /></div>
+    
+    <div class="d-search">
+        <div class="row">
+            <div class="col-md-10">
+                <input type="text" class="text-search" id="searchString" placeholder="Enter designation / location" />
+            </div>
+            <div class="col-md-2">
+            <button class="btn-search" id="searchButton">Search</button>
+        </div>
+        </div>
+    </div>
+
+</div>
+
+<script src="~/Scripts/jquery-3.7.1.min.js"></script>
+<script>
+    $(document).ready(function () {
+        $("#searchButton").click(function () {
+            var searchString = $("#searchString").val();
+            var url = "@Url.Action("Jobs", "Home")?search=" + encodeURIComponent(searchString);
+            window.location.href = url;
+        });
+    });
+</script>
+

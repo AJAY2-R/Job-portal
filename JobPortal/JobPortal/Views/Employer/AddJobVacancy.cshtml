@@ -1,0 +1,62 @@
+﻿@model List<JobPortal.Models.Category>
+
+@{
+    ViewBag.Title = "AddJobVacancy";
+    Layout = "~/Views/Shared/EmployerLayout.cshtml";
+}
+
+
+
+<div class="d-flex justify-content-center m-5">
+    <div class="row bg-cus">
+        <div class="col-md-7">
+            <h4>Add job vacancy</h4>
+            <form action="@Url.Action("AddJobVacancy", "Employer")" method="post" onsubmit="return validateJobForm();">
+
+                <label for="JobTitle">Job title:</label>
+                <input type="text" id="JobTitle" name="JobTitle" placeholder="Job titile" onblur="validateJobTitle()" class="form-control">
+                <span id="error-JobTitle" class="text-danger"></span><br>
+
+                <label for="Description">Description:</label><br>
+                <textarea id="Description" name="Description" placeholder="Description" onblur="validateDescription()" class="form-control"></textarea>
+                <span id="error-Description" class="text-danger"></span><br>
+
+                <label for="CategoryID">Category:</label>
+                <select id="CategoryID" name="CategoryID" onblur="validateCategory()" class="form-control">
+                    <option value="">Please select a category</option>
+                    @foreach (var cat in Model)
+                    {
+                        <option value="@cat.CategoryId">@cat.CategoryName</option>
+                    }
+                </select>
+                <span id="error-CategoryID" class="text-danger"></span><br>
+
+                <label for="Location">Location:</label>
+                <input type="text" id="Location" name="Location" placeholder="Location" onblur="validateLocation()" class="form-control">
+                <span id="error-Location" class="text-danger"></span><br>
+
+                <label for="Salary">Salary:</label>
+                <input type="number" id="Salary" name="Salary" placeholder="Salary" onblur="validateSalary()" class="form-control">
+                <span id="error-Salary" class="text-danger"></span><br>
+
+                <label for="EmploymentType">Employment Type:</label>
+                <input type="text" id="EmploymentType" name="EmploymentType" placeholder="Employement type" onblur="validateEmploymentType()" class="form-control">
+                <span id="error-EmploymentType" class="text-danger"></span><br>
+
+                <label for="ApplicationDeadline">Application Deadline:</label>
+                <input type="date" id="ApplicationDeadline" name="ApplicationDeadline" placeholder="Deadline" onblur="validateApplicationDeadline()" class="form-control">
+                <span id="error-ApplicationDeadline" class="text-danger"></span><br>
+
+                <input type="submit" value="POST" class="btn-reg">
+            </form>
+        </div>
+        <div class="col-md-5"><img src="~/Content/Static/Job_Posting_Page.51e6ab7c156a002d438b.png" class="post-vac" /></div>
+
+    </div>
+</div>
+<script src="~/Scripts/MyScripts/main.js"></script>
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        disablePastDates(document.getElementById("ApplicationDeadline"));
+    });
+</script>

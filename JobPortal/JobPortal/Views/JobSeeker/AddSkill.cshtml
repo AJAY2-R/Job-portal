@@ -1,0 +1,29 @@
+﻿@model IEnumerable<JobPortal.Models.Skills>
+@{
+    ViewBag.Title = "AddSkill";
+    Layout = "~/Views/Shared/JobSeekerLayout.cshtml";
+}
+
+<link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/css/select2.min.css" rel="stylesheet" />
+
+<h2>AddSkill</h2>
+<form method="post" action="@Url.Action("AddSkill","JobSeeker")">
+    <select id="skills" name="SkillId" multiple="multiple">
+        @foreach (var skill in Model)
+        {
+            <option value="@skill.SkillId">@skill.SkillName</option>
+        }
+    </select>
+    <input type="submit" value="Submit" />
+</form>
+@section Scripts {
+    @Scripts.Render("~/Scripts/jquery-3.7.1.min.js")
+    @Scripts.Render("~/Scripts/MyScripts/select2.min.js")
+}
+<script src="~/Scripts/MyScripts/select2.min.js"></script>
+<script src="~/Scripts/jquery-3.7.1.min.js"></script>
+<script>
+    $(document).ready(function () {
+        $('#skills').select2();
+    });
+</script>

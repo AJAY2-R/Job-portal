@@ -14,8 +14,6 @@ The Job Portal Web Application is a dynamic online platform built using ASP.NET 
 
 - **User Profiles:** Both job seekers and employers can create and manage detailed profiles, including personal information, work experience, and educational backgrounds.
 
-- **Rating and Reviews:** Job seekers can rate and review companies based on their experiences, helping others make informed decisions about potential employers.
-
 - **Education Details:** Job seekers can provide comprehensive information about their educational background, including schools, degrees, majors, graduation years, and GPAs.
 
 - **Secure Authentication:** The application implements user registration and authentication to ensure data and account security.

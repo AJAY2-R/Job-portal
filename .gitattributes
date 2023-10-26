@@ -1,6 +1,6 @@
 *.css linguist-detectable=false
 *.js linguist-detectable=false
 *.html linguist-detectable=false
-*.chtml linguist-detectable=false
+*.cshtml linguist-detectable=false
 *.razor linguist-detectable=false
 *.mako linguist-detectable=false
